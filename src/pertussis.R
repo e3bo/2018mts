@@ -105,7 +105,7 @@ stopifnot(all(strt_cum[is_b4_76,"1"] == 0))
 ## Assert that no cumulative time series in early data
 
 pert %>% filter(is.na(Admin2Name) & is.na(CityName) &
-                Admin1Name %in% c(toupper(state.name), "DISTRICT OF COLUMBIA") &
+               Admin1Name %in% c(toupper(state.name), "DISTRICT OF COLUMBIA") &
                   PartOfCumulativeCountSeries == 0) %>%
   mutate(start = ymd(PeriodStartDate),
          end = ymd(PeriodEndDate)) -> pbar
@@ -253,7 +253,8 @@ par(c(5, 4, 0, 0) + 0.1)
 start_inds5 <- seq_along(point_ests5)
 window_starts5 <- foo4$start[start_inds5]
 plot(window_starts5, point_ests5, ylim = c(0, .3),
-     ylab = "Average pairwise correlation", xlab = "First year of 8-year window", type = 'l')
+     ylab = "Average pairwise correlation",
+     xlab = "First year of 8-year window", type = 'l')
 lines(window_starts5, ci5[1,], col = "grey")
 lines(window_starts5, ci5[2,], col = "grey")
 dev.off()
@@ -264,7 +265,8 @@ dev.off()
 foo3 %>% mutate(year = year(start)) %>%  filter(year > 1938 & year < 1955) %>%
   group_by(year) %>% summarise(annualct = sum(ctsi)) -> natagg
 
-perttd %>% filter(country == "USA") %>% inner_join(natagg, by = "year") -> usdata
+perttd %>% filter(country == "USA") %>%
+  inner_join(natagg, by = "year") -> usdata
 usdata %>% ggplot(aes(cases, annualct)) + geom_text(aes(label = year))
 
 
@@ -316,9 +318,8 @@ pmap <- ggplot() + geom_sf(data = bar, aes(fill = ctsi, geometry = geometry)) +
   transition_manual(start) + labs(title = 'Reporting week: {current_frame}') +
     guides(fill = guide_legend(title = "Reported\npertussis\ncases"))
 
-animate(pmap, renderer = ffmpeg_renderer())
-
-anim_save("pertussis-animation")
+anim <- animate(pmap, renderer = ffmpeg_renderer())
+anim_save("pertussis-animation.mp4", anim)
 
 iqrng <- function(x) unname(diff(quantile(x, probs = c(0.25, 0.75))))
 
@@ -330,9 +331,8 @@ ggplot(aes(fill = reports_cnts)) + geom_sf() +
   transition_manual(start) + labs(title = 'Reporting week: {current_frame}') +
     guides(fill = guide_legend(title = "Reported\npertussis\ncases\nscaled")) -> pmap2
 
-animate(pmap2, renderer = ffmpeg_renderer())
-
-anim_save("pertussis-animation-scaled.mp4")
+anim <- animate(pmap2, renderer = ffmpeg_renderer())
+anim_save("pertussis-animation-scaled.mp4", anim)
 
 ## Relationship between strength of correlation with distance and population size
 
@@ -343,7 +343,7 @@ key <- match(colnames(foo4)[-1], toupper(state.name))
 
 longlat <- cbind(state.center$x[key], state.center$y[key])
 
-n <- nrow(latlong)
+n <- nrow(longlat)
 dmat <- matrix(nrow = n, ncol = n)
 for(i in seq_len(n)){
   for(j in seq_len(n)){
