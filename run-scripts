@@ -19,6 +19,6 @@ trap finish EXIT
 docker run -v ${indir}:${hdir}/src:ro \
        -v ${outdir}:${hdir}/work \
        -w ${hdir}/work \
-       --user rstudio \
+       --user rstudio --rm \
        eamon/2018mts:v20181127 /bin/bash -c \
        "cp ../src/*.R . && cp ../src/*.csv . && ./pertussis.R"
