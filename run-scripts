@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+topd=$(pwd)
+tstamp=$(date +%Y-%m-%d_%H-%M-%S)
+outdir="${topd}/work-${tstamp}"
+indir="${topd}/src"
+hdir="/home/rstudio"
+
+mkdir ${outdir}
+chmod 757 ${outdir}
+function finish {
+    chown -R --reference $0 ${outdir}
+    chmod 755 ${outdir}
+}
+trap finish EXIT
+
+docker run -v ${indir}:${hdir}/src:ro \
+       -v ${outdir}:${hdir}/work \
+       -w ${hdir}/work \
+       --user rstudio \
+       eamon/2018mts:v20181127 /bin/bash -c \
+       "cp ../src/*.R . && cp ../src/*.csv . && ./pertussis.R"

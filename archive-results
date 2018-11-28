@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+zip -r --symlinks $1 $1

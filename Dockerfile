@@ -1,0 +1,117 @@
+FROM rocker/geospatial:3.5.1
+MAINTAINER Eamon O'Dea <[last name without apostrophe]35@gmail.com>
+
+RUN apt-get update && apt-get install -y -q --no-install-recommends \
+ cargo \
+ ffmpeg
+
+RUN install2.r --skipinstalled --error BH \
+ DBI \
+ R6 \
+ RApiDatetime \
+ RColorBrewer \
+ Rcpp \
+ anytime \
+ assertthat \
+ backports \
+ base64enc \
+ bindr \
+ bindrcpp \
+ biwavelet \
+ broom \
+ callr \
+ cellranger \
+ classInt \
+ cli \
+ clipr \
+ colorspace \
+ crayon \
+ curl \
+ dbplyr \
+ digest \
+ dotCall64 \
+ dplyr \
+ e1071 \
+ evaluate \
+ farver \
+ fields \
+ forcats \
+ foreach \
+ geosphere \
+ ggforce \
+ gifski \
+ glue \
+ gtable \
+ haven \
+ highr \
+ hms \
+ htmltools \
+ httr \
+ iterators \
+ jsonlite \
+ knitr \
+ labeling \
+ lazyeval \
+ lubridate \
+ magrittr \
+ maps \
+ maptools \
+ markdown \
+ mime \
+ mnormt \
+ modelr \
+ munsell \
+ openssl \
+ packrat \
+ padr \
+ pillar \
+ pkgconfig \
+ plogr \
+ plyr \
+ png \
+ praise \
+ prettyunits \
+ processx \
+ progress \
+ psych \
+ purrr \
+ rappdirs \
+ readr \
+ readxl \
+ rematch \
+ reprex \
+ reshape2 \
+ rgdal \
+ rlang \
+ rmarkdown \
+ rprojroot \
+ rstudioapi \
+ rvest \
+ scales \
+ selectr \
+ sf \
+ sp \
+ spData \
+ spam \
+ stringi \
+ stringr \
+ testthat \
+ tibble \
+ tidyr \
+ tidyselect \
+ tidyverse \
+ tigris \
+ tinytex \
+ tsibble \
+ units \
+ utf8 \
+ uuid \
+ viridisLite \
+ whisker \
+ withr \
+ xml2 \
+ yaml \
+ zoo
+
+RUN installGithub.r thomasp85/gganimate@7709b6f294f0265ce33e64239cba9f595049c0d5 \
+ hadley/ggplot2@828e948dcfc5c5a2bd532e78b160bb3abb25de74
