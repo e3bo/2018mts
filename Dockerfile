@@ -25,6 +25,7 @@ RUN install2.r --skipinstalled --error BH \
  cli \
  clipr \
  colorspace \
+ cowplot \
  crayon \
  curl \
  dbplyr \
@@ -87,6 +88,7 @@ RUN install2.r --skipinstalled --error BH \
  rprojroot \
  rstudioapi \
  rvest \
+ Rwave \
  scales \
  selectr \
  sf \
